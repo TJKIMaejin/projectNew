@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script>
+		let result;
+
+
+
+		function first(){
+			console.log("요청 실행")
+			$.ajax({
+				type: "GET",
+				url: "/api/media",
+				data: {},
+				success: function(response){
+					result = response
+					console.log(response)
+				}
+			})
+		}
+
+		$(document).ready(function(){
+			first()
+			console.log("초기함수 실행")	
+		}); 
+		function pig(){
+			let pig=result['pig']
+
+
+
+			for (let i = 0 ; i < pig.length; i++){
+				let name = pig[i]['name'];
+				let dish = pig[i]['dish']
+				let address= pig[i]['add']
+				let temp_html='<div class="col-sm-6">\
+				<div class="card">\
+				<div class="card-body">\
+				<h5 class="card-title">'+name+'</h5>\
+				<p class="card-text">'+dish+'</p>\
+				<p>'+address+'</p>\
+				<a href=https://www.google.com/maps/search/'+name+'/ class="btn btn-primary">지도 보자</a>\
+				</div>\
+				</div>\
+				</div>'
+				$('#cl').append(temp_html)
+
+
+
+
+			}
+		}
+	</script>
+</head>
+<style >
+
+	#container1{
+		margin-top: 60px;
+		padding: auto;
+	}
+	#rect1{
+		background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRo74rDFbsSuX-AQoVU-X9AOEUMKQjS6Uoin538IocTicv_nv8W");
+		background-size: contain;
+
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+	#rect2{
+		background: url("https://dramah.hyundaimedia.com/uploadFile/pr/1518161261275.jpg");
+		background-size: contain;
+
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;	
+
+	}
+	#rect3{
+		background: url("https://image.shutterstock.com/image-photo/fast-food-unhealthy-eating-concept-260nw-288575585.jpg");
+		background-size: contain;
+
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+	#text1{
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+
+	}
+	#card1{
+
+
+
+
+	}
+	#wrap_card{
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+	}
+</style>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-xl navbar-dark fixed-top bg-dark" >
+			<a class="navbar-brand" href="http://localhost:5000/">태자</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExample06">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="http://localhost:5000/">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:5000/test1">태자's pick</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:5000/test2">MEDIA</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:5000/test3">TOWN</a>
+					</li>
+					<li class="nav-item dropdown">
+						
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-md-0">
+					<input class="form-control" type="text" placeholder="Search">
+				</form>
+			</div>
+		</nav>	
+	</header>
+	<div class="jumbotron" style="background-color: white;">
+		<div class="container" id="text1">
+			<h1 class="display-3">FOR YOU</h1>
+			<h3> 골라 줘도 못먹으면... Wls </h3>
+
+		</div>
+	</div>
+	<div class="BX1">
+
+
+		<div class="form-col" id="wrap2">
+			<div class="form-group col-md-4">
+				<label for="inputState">도시</label>
+				<select  id="inputState_select1" class="form-control" onchange="fnCngList(this.value);">
+					<option value="">Choose...</option>
+					<option value="서울">서울</option>
+					<option value="강원">강원</option>
+					<option value="전라">전라</option>
+					<option value="경상">경상</option>
+					<option value="충청">충청</option>
+					<option value="제주">제주</option>
+
+
+				</select>
+
+			</div>
+			<div class="form-group col-md-4">
+				<label for="inputState">구/시/군</label>
+				<select id="inputState_select2" class="form-control" >
+					<option  value="">Choose...</option>
+				</select>
+			</div>
+			<div class="form-group col-md-4">
+				<label for="inputState">방송</label>
+				<select id="inputState_select3" class="form-control" >
+
+					<option  value="수요미식회">수요미식회</option>
+					<option  value="맛있는 녀석들">맛있는 녀석들</option>
+					<option  value="백종원 3대 천왕">백종원 3대 천왕</option>
+					<option  value="식객">식객</option>
+					<option  value="오래된 한식당 100">오래된 한식당 100</option>
+					<option  value="테이스티로드">테이스티로드</option>
+					<option  value="생생 정보통">생생 정보통</option>
+					<option  value="미쉐린가이드 2018">미쉐린가이드 2018</option>
+
+
+				</select>
+			</div>
+
+
+		</div>
+
+		<div class="BTN1" id="bt1">
+			<p class="PB1">
+				<button type="button" class="btn btn-primary" onclick="q1()"> 찾아보자</button>
+			</p>
+		</div>
+	</div>
+
+
+	<div class="row" id="cl">
+
+
+	</div>
+
+
+
+
+</body>
+</html>

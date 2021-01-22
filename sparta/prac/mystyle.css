@@ -1,0 +1,46 @@
+*{
+	font-family: 'Song Myung', serif;
+}
+.login-box{
+
+	width: 50%;
+	max-width: 200px;
+	height:  200px;
+	text-align: center;
+
+	border-radius: 15px;
+	color :white;
+	background-image: url(http://www.forest.go.kr/newkfsweb/cmm/fms/FileDown.do?atchFileId=FILE_000000010008639&fileSn=0);
+	background-size:cover;
+	background-position: center;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.mybtn{
+	padding: 10px 20px 10px 20px;
+	margin: 30px 0px 0px 10px;
+
+}
+.login-box >h1{
+	margin: 0px 0px 10px 0px;
+
+}
+.login-box>h5{
+	margin: 10px 0px 10px 0px;
+}
+.wrap {
+	background-color: green;
+	width: 50%;
+	margin: 100px auto;
+
+}		
+@media screen and (max-width:600px) {
+	.login-box{
+		color:red;
+		font-weight: bold;
+
+	}
+}

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+	<script>
+
+		function fnCngList(Val){
+
+			
+			let temp_html = ''
+			let gus = []
+
+			if (Val == '서울') {
+				gus = ["종로구","중구","용산구","성동구","광진구","동대문구","중랑구","성북구","강북구","도봉구","노원구","은평구","서대문구","마포구","양천구","강서구","구로구","금천구","영등포구","동작구","관악구","서초구","강남구","송파구","강동구"]
+			}
+			else if(Val=='강원'){
+				gus =["춘천시","원주시","강릉시","동해시","태백시","속초시","삼척시","홍천군","횡성군","영월군","평창군","정선군","철원군","화천군","양구군","인재군","고성군","양양군"]
+			}
+
+			else if (Val=='전라'){
+				gus=["전주시","완산구","덕진구","군산시","익산시","정읍시","순창군","부안군","김제시","목포시","여수시","순천시","나주시","광양군","곡성군","보성군","헤남군","완도군","장성군","무안군","포항시","남구","북구","경주시","김천시","안동시","구미시","칠곡군","올릉군",]
+			}
+			else if (Val=='경상'){
+				gus=["포항시","남구","북구","경주시","김천시","안동시","구미시","칠곡군","올릉군","창원시","진주시","통영시","사천시","김해시","밀양시","거제시"]
+			}
+
+			for (let i =0 ; i< gus.length; i++){
+				temp_html += '<option value='+gus[i]+'>'+gus[i]+'</option>'
+			}
+
+
+			$('#inputState_select2').empty()
+			$('#inputState_select2').append(temp_html)
+
+		}
+
+
+
+		$(document).ready(function(){
+			fnCngList()
+			console.log("초기함수 실행")	
+		}); 
+
+
+
+
+
+
+		let result;
+
+
+		function q1(){
+			$('#cl *').remove();
+			let city=$('#inputState_select1').val();
+			let gu = $('#inputState_select2').val();
+			let media1 =$('#inputState_select3').val();
+			
+
+
+			console.log("요청 실행")
+			
+
+			console.log(gu)
+			console.log(city)
+			console.log(media1)
+			$.ajax({
+				type: "GET",
+				url: "/api/find",
+				data: {},
+
+
+				success: function(response){
+
+					let result = response
+					let seoul =result['seoul']
+					let jeolla =result['Jeolla']
+					let gyeongsang= result['gyeongsang']
+					let gangwon= result['Gangwon']
+					
+
+
+
+					if	(city=='서울'){
+						
+
+						console.log(gu)
+						for (let i = 0 ; i < seoul.length; i++){
+							let name = seoul[i]['name'];
+							let dish = seoul[i]['dish']
+							let address= seoul[i]['add']
+							let media =seoul[i]['media']
+							let url =seoul[i]['src']
+							
+							if (address.indexOf(gu) !== -1)
+							{
+								if (media.indexOf(media1) !== -1) 
+								{
+									console.log(url)
+
+									let temp_html='<div id="wrap_card">\
+									<div class="card mb-3" style="margin:auto; padding:auto; width: 774px; height: 243px;"  id ="card1">\
+									<div class="row no-gutters">\
+									<div class="col-md-4">\
+									<img src="'+url+'" class="card-img" alt="..." >\
+									</div>\
+									<div class="col-md-8">\
+									<div class="card-body">\
+									<h5 class="card-title">'+name+'</h5>\
+									<p class="card-text">'+address+'</p>\
+									<p class="card-text">'+dish+'</p>\
+									<p class="card-text"><small>'+media+'</small></p>\
+									<a href=https://www.google.com/maps/search/'+name+'/ class="btn btn-primary">지도 보자</a>\
+									</div>\
+									</div>\
+									</div>\
+									</div>\
+									</div>\
+									'
+									$('#cl').append(temp_html)
+
+
+								}
+
+							}
+
+
+						}
+					}
+
+					else if	(city=='전라'){
+						
+
+						console.log(gu)
+						for (let i = 0 ; i < jeolla.length; i++){
+							let name = jeolla[i]['name'];
+							let dish = jeolla[i]['dish']
+							let address= jeolla[i]['add']
+							let media =jeolla[i]['media']
+							let url =jeolla[i]['src']
+
+							if (address.indexOf(gu) !== -1)
+							{
+								if (media.indexOf(media1) !== -1) 
+								{
+
+									let temp_html='<div class="row no-gutters">\
+									<img src="'+url+'"...">\
+									</div>\
+									<div class="col-8">\
+									<div class="card-body">\
+									<h5 class="card-title">'+name+'</h5>\
+									<p>'+address+'</p>\
+									<p>'+media+'</p>\
+									<a href=https://www.google.com/maps/search/'+name+'/ class="btn btn-primary">지도 보자</a>\
+									</div>\
+									</div>\
+									</div>'
+									$('#cl').append(temp_html)
+
+
+								}
+
+							}
+
+
+						}
+					}
+
+					else if	(city=='경상'){
+						
+
+						console.log(gu)
+						for (let i = 0 ; i < gyeongsang.length; i++){
+							let name = gyeongsang[i]['name'];
+							let dish = gyeongsang[i]['dish']
+							let address= gyeongsang[i]['add']
+							let media =gyeongsang[i]['media']
+							let url =gyeongsang[i]['src']
+
+							if (address.indexOf(gu) !== -1)
+							{
+								if (media.indexOf(media1) !== -1) 
+								{
+
+									let temp_html='<div class="row no-gutters">\
+									<img src="'+url+'"...">\
+									</div>\
+									<div class="col-8">\
+									<div class="card-body" style="width">\
+									<h5 class="card-title">'+name+'</h5>\
+									<p>'+address+'</p>\
+									<p>'+media+'</p>\
+									<a href=https://www.google.com/maps/search/'+name+'/ class="btn btn-primary">지도 보자</a>\
+									</div>\
+									</div>\
+									</div>'
+									$('#cl').append(temp_html)
+
+
+
+								}
+
+							}
+
+
+						}
+					}
+					else if	(city=='강원'){
+						
+
+						console.log(gu)
+						for (let i = 0 ; i < gangwon.length; i++){
+							let name = gangwon[i]['name'];
+							let dish = gangwon[i]['dish']
+							let address= gangwon[i]['add']
+							let media =gangwon[i]['media']
+							let url =gangwon[i]['src']
+
+							if (address.indexOf(gu) !== -1)
+							{
+								if (media.indexOf(media1) !== -1) 
+								{
+
+									let temp_html='	<div id="wrap_card">\
+									<div class="card mb-3" style="width: 774px; height: 243px;"  id ="card1">\
+									<div class="row no-gutters">\
+									<div class="col-md-4">\
+									<img src="'+url+'" class="card-img" alt="...">\
+									</div>\
+									<div class="col-md-8">\
+									<div class="card-body">\
+									<h5 class="card-title">'+name+'</h5>\
+									<p class="card-text">'+address+'</p>\
+									<p class="card-text"><small>'+media+'</small></p>\
+									\
+									</div>\
+									</div>\
+									</div>\
+									</div>\
+									</div>\
+									'
+									$('#cl').append(temp_html)
+
+
+								}
+
+							}
+
+
+						}
+					}
+					
+
+				}
+
+
+
+
+			})
+}
+
+function q2(){
+	$('cl').remove()
+}
+
+
+
+</script>
+</head>
+<style >
+
+	
+
+	#clear{
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+
+
+
+	}
+	#img1{
+		
+	}
+	#wrap_card{
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+	}
+	#wrap2{
+		
+
+	}
+	#bt1{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+	}
+	#card_wrap{
+		
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+	}
+	#BX1{
+		
+		flex-direction: column;
+		display: flex;
+		align-items: center;
+		justify-content:center;
+
+	}
+	.column {
+		float: left;
+		width: 50%;
+		padding: 30px;
+	}
+
+	/* Clear floats after the columns */
+	
+/*	#con1{
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-size: contain;
+
+		background-repeat: no-repeat;
+		background-position: center center;
+		}*/
+
+	}
+</style>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-xl navbar-dark fixed-top bg-dark" >
+			<a class="navbar-brand" href="http://localhost:5000/">태자</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarsExample06">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="http://localhost:5000/">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:5000/test1">태자's pick</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:5000/test2">MEDIA</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://localhost:5000/test3">TOWN</a>
+					</li>
+					<li class="nav-item dropdown">
+						
+					</li>
+				</ul>
+				
+			</div>
+		</nav>	
+	</header>
+	<hr class="featurette-divider">
+	
+
+
+	<div class="row" >
+
+		<div class="column">
+			<div class="BX1">
+
+
+				<div class="column-side" id="wrap2" >
+					<div class="form-group col-md-4">
+						<label for="inputState">도시</label>
+						<select  id="inputState_select1" class="form-control" onchange="fnCngList(this.value);" style="width:300px">
+							<option value="">Choose...</option>
+							<option value="서울">서울</option>
+							<option value="강원">강원</option>
+							<option value="전라">전라</option>
+							<option value="경상">경상</option>
+							<option value="충청">충청</option>
+							<option value="제주">제주</option>
+
+
+						</select>
+
+					</div>
+					<div class="form-group col-md-4">
+						<label for="inputState">구/시/군</label>
+						<select id="inputState_select2" class="form-control" style="width:300px" >
+							<option  value="">Choose...</option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="inputState">방송</label>
+						<select id="inputState_select3" class="form-control" style="width:300px" >
+
+							<option  value="수요미식회">수요미식회</option>
+							<option  value="맛있는 녀석들">맛있는 녀석들</option>
+							<option  value="백종원 3대 천왕">백종원 3대 천왕</option>
+							<option  value="식객">식객</option>
+							<option  value="오래된 한식당 100">오래된 한식당 100</option>
+							<option  value="테이스티로드">테이스티로드</option>
+							<option  value="생생 정보통">생생 정보통</option>
+							<option  value="미쉐린가이드 2018">미쉐린가이드 2018</option>
+
+
+						</select>
+					</div>
+					<div class="BTN1" id="bt1">
+						<p class="PB1">
+							<button type="button" class="btn btn-primary" onclick="q1()"> 찾아보자</button>
+						</p>
+
+					</div>
+
+
+				</div>
+
+
+				
+			</div>
+			<div class="col-md-6">
+				<div class="card flex-md-row mb-4 shadow-sm h-md-250">
+					<div class="card-body d-flex flex-column align-items-start" style="margin:0px; width:350px; height: 200px;">
+						<strong class="d-inline-block mb-2 text-primary">World</strong>
+						<h6 class="mb-0">
+							<a class="text-dark" href="#">Featured post</a>
+						</h5>
+						<div class="mb-1 text-muted">Nov 12</div>
+						<p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+						<a href="#">Continue reading</a>
+					</div>
+					<img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 200px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_170964b43a8%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_170964b43a8%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+				</div>
+			</div>
+
+			
+		</div>
+
+
+
+		<div class="column" style=" ">
+			<h2>Column</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+		</div>
+		<div class="col-md-6">
+			<div class="card flex-md-row mb-4 shadow-sm h-md-250">
+				<div class="card-body d-flex flex-column align-items-start">
+					<strong class="d-inline-block mb-2 text-primary">World</strong>
+					<h3 class="mb-0">
+						<a class="text-dark" href="#">Featured post</a>
+					</h3>
+					<div class="mb-1 text-muted">Nov 12</div>
+					<p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+					<a href="#">Continue reading</a>
+				</div>
+				<img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_170964b43a8%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_170964b43a8%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+			</div>
+		</div>
+
+	
+
+
+
+
+
+
+
+
+	</body>
+	</html>
